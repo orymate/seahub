@@ -12,6 +12,10 @@ try:
     from settings import BUSINESS_MODE
 except ImportError:
     BUSINESS_MODE = False
+try:
+    from settings import SEACLOUD_MODE
+except ImportError:
+    SEACLOUD_MODE = False
 
 try:
     from settings import ENABLE_FILE_SEARCH
@@ -36,6 +40,7 @@ def base(request):
         'seafile_version': SEAFILE_VERSION,
         'site_title': SITE_TITLE,
         'business_mode': BUSINESS_MODE,
+        'seacloud_mode': SEACLOUD_MODE,
         'cloud_mode': request.cloud_mode,
         'org': org,
         'base_template': base_template,

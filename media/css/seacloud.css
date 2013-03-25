@@ -27,10 +27,9 @@ input[type=submit]:hover { border: 1px solid #80B0B0; background: #FFF; }
 label { display: inline-block; margin:2px 0px; }
 /* table */
 table { border-spacing: 0; border-collapse: collapse; }
-td, th { padding: 3px; border: 1px solid #000; }
-tr.even { background-color: #FAFAFA; }
-tr.odd { background-color: #E0E0E0; }
-tr.first { background-color: #00FF00; }
+td, th { padding: 3px; border: 1px solid #ccc; }
+tr:nth-child(2n) { background-color:#f8f8f8; }
+
 
 .error { color:red; }
 .clear { clear:both;}
@@ -514,11 +513,22 @@ h2#mobile {
     margin-top: 40px;
 }
 #seacloud-feature {
-    font-size:18px;
+    font-size:22px;
     color: #e83;
 }
 #seacloud-base {
     font-size:16px;
+}
+#pricing {
+    margin: 40px 0;
+}
+#pricing h2 {
+    text-align: center;
+    margin: 10px 0;
+}
+#pricing table {
+    width: 500px;
+    margin: 0px auto;
 }
 /*contact*/
 #contact-us {

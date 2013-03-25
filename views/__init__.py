@@ -88,8 +88,8 @@ def root(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse(myhome))
     else:
-        if hasattr(settings, 'DEFAULT_HOME_PAGE'):
-            return render_to_response(settings.DEFAULT_HOME_PAGE, {},
+        if hasattr(settings, 'SEACLOUD_MODE'):
+            return render_to_response('seacloud/home.html', {},
                                       context_instance=RequestContext(request))
         else:
             return HttpResponseRedirect(settings.LOGIN_URL)
