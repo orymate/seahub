@@ -12,15 +12,13 @@
 <div id="wrapper">
     <div id="header">
         <div class="header-inner">
-            <div class="top-bar">
+            <div class="top-bar w100 ovhd">
+                <a href="https://cloud.seafile.com/demo/" class="demo-account fleft" target="_blank">Try It Now</a>
                 <a href="https://seacloud.cc/accounts/register/">Signup</a>
                 <a href="https://seacloud.cc/accounts/login">Login</a>
-                <a href="https://cloud.seafile.com/demo/" class="demo-account fleft" target="_blank">Try It Now</a>
             </div>
-        </div>
-        <div>
-            <img id="slogan" src="{{ MEDIA_URL }}img/demo/group.png" width="600"/>
             <div id="seacloud-intro">
+                <img src="{{ MEDIA_URL }}img/demo/group.png" width="600" alt="group screenshot" id="screenshot" />
                 <p id="seacloud-slogan">Group Spaces with File Syncing, Discussion, Wiki and Tasks</p>
                 <p id="seacloud-feature">An Ideal Collaboration Place for Document-Centered Projects</p>
                 <p id="seacloud-base">Based on the open source file-syncing tool Seafile</p> 
@@ -31,12 +29,12 @@
     <div id="main">
         <div class="home">
             <a href="https://seacloud.cc/accounts/register/" class="register">Signup<br /><span>Unlimit Number of Groups</span></a>
-            <p class="use">Usage: Signup and use, you can also download <a href="{{ SITE_ROOT }}download/">Seafile Client</a> and sync files with local folders. See our <a href="{{ SITE_ROOT }}en/help/">help for Seafile client</a>.</p>
+            <p class="use">Usage: Signup and use, you can also download <a href="http://seafile.com/en/download/">Seafile Client</a> and sync files with local folders. See our <a href="http://seafile.com/en/help/">help for Seafile client</a>.</p>
         </div>
 
-        <div id="pricing" class="clear block">
-            <h2>Pricing Plan</h2>
+        <div id="pricing" class="block">
             <table>
+            <caption>Pricing Plan</caption>
                 <tr>
                     <th></th>
   	                <th>Free</th>
@@ -69,15 +67,12 @@
                 </tr>
             </table>
         </div>
-
     </div>
 
-
-    <div id="footer" class="ovhd">
-        <p class="fleft">Copyright ©2013 Seafile Ltd.</p>
+    <div id="footer">
+        <p>Copyright ©2013 Seafile Ltd.</p>
     </div>
 
 </div><!-- wrapper -->
-
 </body>
 </html>
