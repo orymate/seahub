@@ -111,8 +111,9 @@
             </div>
         </div>
 
-        <div id="footer" class="ovhd">
+        <div id="footer" class="ovhd">           
             <div class="items fleft">
+                {% if not seacloud_mode %}
                 <div class="item">
                     <h4>Seafile</h4>
                     <ul>
@@ -133,10 +134,31 @@
                         <li><a href="http://www.seafile.com/{% if LANGUAGE_CODE == 'en' %}en/{% endif %}help/" target="_blank">{% trans "Help" %}</a></li>
                     </ul>
                 </div>
+                {% else %}
+                <div class="item">
+                    <h4>Seacloud</h4>
+                    <ul>
+                        <li><a href="https://seacloud.cc/group/2/wiki/" target="_blank">{% trans "Introduction" %}</a></li>
+                        <li><a href="https://seacloud.cc/group/2/wiki/">Wiki</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h4>{% trans "Syncing Client" %}</h4>
+                    <ul>
+                        <li><a href="http://www.seafile.com/{% if LANGUAGE_CODE == 'en' %}en/{% endif %}download/">{% trans "Seafile for Windows, Mac and Linux" %}</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h4>{% trans "Documents" %}</h4>
+                    <ul>
+                        <li><a href="http://www.seafile.com/{% if LANGUAGE_CODE == 'en' %}en/{% endif %}help/" target="_blank">{% trans "Help" %}</a></li>
+                    </ul>
+                </div>
+                {% endif %}
             </div>
             <div class="other-info fright">
                 <p>{% trans "Server Version: " %}{{ seafile_version }}</p>
-                <p>© 2013 {% trans "Seafile" %}</p>
+                <p>© 2013 Seafile</p>
                 <p><a href="http://seafile.com/{% if LANGUAGE_CODE == 'en' %}en/{% endif %}contact/" target="_blank">{% trans "Contact Us" %}</a></p>
             </div>
         </div>
