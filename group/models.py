@@ -4,6 +4,7 @@ import re
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import datetime_safe
 
 from seaserv import get_group_members
 
@@ -17,11 +18,27 @@ class GroupMessage(models.Model):
     message = models.CharField(max_length=500)
     timestamp = models.DateTimeField(default=datetime.datetime.now)
 
+    def reprJSON(self):
+        DATE_FORMAT = "%Y-%m-%d"
+        TIME_FORMAT = "%H:%M:%S"
+        d = datetime_safe.new_datetime(self.timestamp)
+        timestamp = d.strftime("%s %s" % (DATE_FORMAT, TIME_FORMAT))
+        return dict(group_id=self.group_id, from_email=self.from_email,
+                    message=self.message, timestamp=timestamp)
+
 class MessageReply(models.Model):
     reply_to = models.ForeignKey(GroupMessage)
     from_email = models.EmailField()
     message = models.CharField(max_length=150)
     timestamp = models.DateTimeField(default=datetime.datetime.now)
+
+    def reprJSON(self):
+        DATE_FORMAT = "%Y-%m-%d"
+        TIME_FORMAT = "%H:%M:%S"
+        d = datetime_safe.new_datetime(self.timestamp)
+        timestamp = d.strftime("%s %s" % (DATE_FORMAT, TIME_FORMAT))
+        return dict(reply_to=self.reply_to_id, from_email=self.from_email,
+                    message=self.message, timestamp=timestamp)
 
 class MessageAttachment(models.Model):
     """

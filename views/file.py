@@ -20,6 +20,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, Http404, \
 from django.shortcuts import render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.template.loader import render_to_string
+from django.utils import datetime_safe
 from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext as _
@@ -33,7 +34,7 @@ from auth.decorators import login_required
 from base.decorators import repo_passwd_set_required
 from base.models import UuidObjidMap, FileComment, FileDiscuss
 from contacts.models import Contact
-from group.models import GroupMessage
+from group.models import GroupMessage, MessageReply
 from share.models import FileShare
 from seahub.utils import get_httpserver_root, show_delete_days, render_error, \
     get_file_type_and_ext, gen_file_get_url, gen_shared_link, is_file_starred, \
@@ -709,8 +710,15 @@ def aj_file_discuss(request, repo_id):
     msg_ids = [ e.group_message_id for e in file_discs ]
 
     grp_msgs = GroupMessage.objects.filter(id__in=msg_ids)
-
-    return HttpResponse(serializers.serialize("json", grp_msgs), status=200,
+    msg_replies = MessageReply.objects.filter(reply_to__in=grp_msgs)
+    ret_list = []
+    for msg in grp_msgs:
+        msg_json = msg.reprJSON()
+        msg_json['replies'] = []
+        for reply in msg_replies:
+            if msg.id == reply.reply_to_id:
+                msg_json['replies'].append(reply.reprJSON())
+        ret_list.append(msg_json)
+    return HttpResponse(json.dumps(ret_list), status=200,
                         content_type=content_type)
-
     
