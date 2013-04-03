@@ -17,6 +17,16 @@ $('#discuss').click(function() {
         form.addClass('hide');
         caret.addClass('hide');
     }
+
+    $.ajax({
+        url: "{% url 'aj_file_discuss' repo.id %}" + '?p=' + "{{path|urlencode}}",
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+        },
+        error: function() {
+        }
+    });
 });
 $(document).click(function(e) {
     var target = e.target || event.srcElement;
@@ -65,4 +75,5 @@ $(function() {
     var btn_height = $('#bottom-bar button').outerHeight();
     $('#discuss-to-group-caret, #to-group-caret, #comment-caret').css({'bottom': btn_height + 1});
     $('#file-comment, #to-group, #discuss-to-group-form').css({'bottom': btn_height + 1 + $('.outer-caret').outerHeight()});
+
 });

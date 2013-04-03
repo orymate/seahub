@@ -42,6 +42,7 @@ from signals import grpmsg_added, grpmsg_reply_added
 from settings import GROUP_MEMBERS_DEFAULT_DISPLAY
 from base.decorators import sys_staff_required
 from base.mixins import LoginRequiredMixin
+from base.models import FileDiscuss
 from seahub.contacts.models import Contact
 from seahub.contacts.signals import mail_sended
 from seahub.notifications.models import UserNotification
@@ -799,6 +800,10 @@ def group_recommend(request):
                                    attach_type=attach_type, path=path,
                                    src='recommend')
             ma.save()
+
+            # save discuss
+            fd = FileDiscuss(group_message=gm, repo_id=repo_id, path=path)
+            fd.save()
 
             group_url = reverse('group_discuss', args=[group_id])
             msg = _(u'Successfully posted to <a href="%(url)s" target="_blank">%(name)s</a>.') %\

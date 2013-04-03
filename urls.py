@@ -4,7 +4,7 @@ from django.views.generic.simple import direct_to_template
 
 from seahub.views import *
 from seahub.views.file import view_file, view_history_file, view_trash_file,\
-    view_snapshot_file, file_edit
+    view_snapshot_file, file_edit, aj_file_discuss
 from seahub.views.repo import RepoView, RepoHistoryView
 from seahub.views.search import search
 from notifications.views import notification_list
@@ -97,6 +97,9 @@ urlpatterns = patterns('',
     (r'^profile/', include('seahub.profile.urls')),
     (r'^share/', include('share.urls')),
 
+    ### AJAX ###
+    url(r'^aj_file_disc/(?P<repo_id>[-0-9a-f]{36})/$', aj_file_discuss, name="aj_file_discuss"),
+                       
     ### system admin ###                       
     (r'^sys/seafadmin/$', sys_seafadmin),
     url(r'^sys/useradmin/$', sys_useradmin, name='sys_useradmin'),

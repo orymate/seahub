@@ -14,6 +14,7 @@ import chardet
 
 from django.contrib.sites.models import Site, RequestSite
 from django.core.urlresolvers import reverse
+from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest, Http404, \
     HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
@@ -30,13 +31,14 @@ from pysearpc import SearpcError
 
 from auth.decorators import login_required
 from base.decorators import repo_passwd_set_required
-from base.models import UuidObjidMap, FileComment
+from base.models import UuidObjidMap, FileComment, FileDiscuss
 from contacts.models import Contact
+from group.models import GroupMessage
 from share.models import FileShare
 from seahub.utils import get_httpserver_root, show_delete_days, render_error, \
     get_file_type_and_ext, gen_file_get_url, gen_shared_link, is_file_starred, \
     get_file_contributors, get_ccnetapplet_root, render_permission_error, \
-    is_textual_file, show_delete_days
+    is_textual_file, show_delete_days, calc_file_path_hash
 from seahub.utils.file_types import (IMAGE, PDF, IMAGE, DOCUMENT, MARKDOWN, \
                                          TEXT, SF)
 from seahub.settings import FILE_ENCODING_LIST, FILE_PREVIEW_MAX_SIZE, \
@@ -688,3 +690,27 @@ def file_edit(request, repo_id):
         'gid': request.GET.get('gid', ''),
     }, context_instance=RequestContext(request))
 
+@login_required
+def aj_file_discuss(request, repo_id):
+    """
+    Used to fetch file/folder discuss in ajax.
+    """
+    if not request.is_ajax():
+        raise Http404
+
+    content_type = 'application/json; charset=utf-8'
+    path = request.GET.get('p', None)
+    if path is None:
+        return HttpResponseBadRequest(content_type=content_type)
+
+    path_hash = calc_file_path_hash(path)
+
+    file_discs = FileDiscuss.objects.filter(path_hash=path_hash, repo_id=repo_id)
+    msg_ids = [ e.group_message_id for e in file_discs ]
+
+    grp_msgs = GroupMessage.objects.filter(id__in=msg_ids)
+
+    return HttpResponse(serializers.serialize("json", grp_msgs), status=200,
+                        content_type=content_type)
+
+    
